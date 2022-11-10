@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using ObservablePatternDemo.Model;
 
 namespace ObservablePatternDemo
 {
-    internal class Observer
+    internal class Observer : IObserver<User>
     {
-
-        public Observer(ISubject subject)
+        public void OnCompleted()
         {
-            subject.UserChanged += Subject_UserChanged;
+            Console.WriteLine("Complete");
         }
 
-        private void Subject_UserChanged(User obj)
+        public void OnError(Exception error)
         {
-            Console.WriteLine( $"Name : {obj.Name}, Age : {obj.Age}");
+            Console.WriteLine($"Error : {error.Message}");
         }
 
+        public void OnNext(User value)
+        {
+            Console.WriteLine($"Name : {value.Name}, Age : {value.Age}");
+        }
     }
 }
